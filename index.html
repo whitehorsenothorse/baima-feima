@@ -2,31 +2,26 @@
 <html lang="zh">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<title>白馬非馬</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
+<title>白马非马 | 백마비마</title>
 <style>
-  * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#fff; overscroll-behavior:none; }
-  #reader { width:100%; height:100%; height:100dvh; overflow-x:auto; overflow-y:hidden; touch-action:pan-x; overscroll-behavior-x:contain; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
-  #reader::-webkit-scrollbar { display:none; }
-  #scroll { display:block; width:auto; height:100%; max-width:none; user-select:none; -webkit-user-select:none; -webkit-user-drag:none; pointer-events:none; }
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff}
+#viewer{position:fixed;inset:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none}
+#viewer::-webkit-scrollbar{display:none}
+#art{display:block;height:100%;width:auto;max-width:none;user-select:none;-webkit-user-drag:none}
 </style>
 </head>
 <body>
-<div id="reader" aria-label="白馬非馬，從右向左閱讀的橫向長卷"><img id="scroll" src="images/scroll.webp" alt="白馬非馬 中韓文長卷" draggable="false"></div>
+<main id="viewer" aria-label="白马非马，向右滑动阅读长卷"><img id="art" src="images/scroll.webp" alt="白马非马，白马论现代中文与韩文解释" draggable="false"></main>
 <script>
 (function(){
- const reader=document.getElementById('reader');
- const image=document.getElementById('scroll');
- let started=false;
- function toStart(){reader.scrollLeft=reader.scrollWidth-reader.clientWidth;}
- function ready(){if(!started){started=true;requestAnimationFrame(()=>requestAnimationFrame(toStart));}}
- if(image.complete) ready(); else image.addEventListener('load',ready,{once:true});
- window.addEventListener('pageshow',function(e){if(e.persisted) return; toStart();});
- window.addEventListener('load',ready,{once:true});
- document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
- document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
+ const viewer=document.getElementById('viewer'),art=document.getElementById('art');
+ let first=true;
+ function right(){viewer.scrollLeft=viewer.scrollWidth-viewer.clientWidth;}
+ function init(){if(first){right();requestAnimationFrame(right);first=false;}}
+ art.addEventListener('load',init);
+ if(art.complete&&art.naturalWidth)init();
+ window.addEventListener('resize',()=>{if(viewer.scrollLeft>=viewer.scrollWidth-viewer.clientWidth-20)right()});
 })();
 </script>
 </body>
