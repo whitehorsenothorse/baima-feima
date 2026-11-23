@@ -1,11 +1,33 @@
-<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"><meta name="theme-color" content="#ffffff"><title>白馬非馬</title><style>*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#fff}#scroll{position:fixed;inset:0;overflow-x:auto;overflow-y:hidden;direction:rtl;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}#scroll::-webkit-scrollbar{display:none}#strip{display:flex;flex-direction:row;direction:rtl;width:max-content;height:100%;align-items:stretch;gap:0}#strip img{display:block;flex:none;width:auto;height:100%;max-width:none;object-fit:fill;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;pointer-events:none}</style></head><body><div id="scroll"><div id="strip"><img src="images/11.webp" alt="" draggable="false" loading="eager" decoding="async">
-<img src="images/10.webp" alt="" draggable="false" loading="eager" decoding="async">
-<img src="images/09.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/08.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/07.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/06.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/05.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/04.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/03.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/02.webp" alt="" draggable="false" loading="lazy" decoding="async">
-<img src="images/01.webp" alt="" draggable="false" loading="lazy" decoding="async"></div></div><script>const sc=document.getElementById('scroll');function reset(){sc.scrollLeft=0;}window.addEventListener('pageshow',reset);window.addEventListener('load',reset);document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});</script></body></html>
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>白馬非馬</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#fff; overscroll-behavior:none; }
+  #reader { width:100%; height:100%; height:100dvh; overflow-x:auto; overflow-y:hidden; touch-action:pan-x; overscroll-behavior-x:contain; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  #reader::-webkit-scrollbar { display:none; }
+  #scroll { display:block; width:auto; height:100%; max-width:none; user-select:none; -webkit-user-select:none; -webkit-user-drag:none; pointer-events:none; }
+</style>
+</head>
+<body>
+<div id="reader" aria-label="白馬非馬，從右向左閱讀的橫向長卷"><img id="scroll" src="images/scroll.webp" alt="白馬非馬 中韓文長卷" draggable="false"></div>
+<script>
+(function(){
+ const reader=document.getElementById('reader');
+ const image=document.getElementById('scroll');
+ let started=false;
+ function toStart(){reader.scrollLeft=reader.scrollWidth-reader.clientWidth;}
+ function ready(){if(!started){started=true;requestAnimationFrame(()=>requestAnimationFrame(toStart));}}
+ if(image.complete) ready(); else image.addEventListener('load',ready,{once:true});
+ window.addEventListener('pageshow',function(e){if(e.persisted) return; toStart();});
+ window.addEventListener('load',ready,{once:true});
+ document.addEventListener('gesturestart',function(e){e.preventDefault();},{passive:false});
+ document.addEventListener('gesturechange',function(e){e.preventDefault();},{passive:false});
+})();
+</script>
+</body>
+</html>
